@@ -1,4 +1,5 @@
 // backend/server.js
+require('dotenv').config(); // Make sure to require dotenv at the beginning
 const express = require('express');
 const axios = require('axios');
 const app = express();
@@ -8,7 +9,7 @@ const port = 8000;
 app.use(express.json());
 app.use(cors());
 
-// Replace with your Google Maps API key
+// Use the API key from the .env file
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 // Function to calculate distance between two points (in meters)
@@ -108,7 +109,7 @@ app.post('/max-reachable-point', async (req, res) => {
             const placesOutsideRouteResponse = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, {
                 params: {
                     location: `${endLocation.lat},${endLocation.lng}`,
-                    radius: 2000, // search within 2000 meters (adjust as needed)
+                    radius: 500, // search within 2000 meters (adjust as needed)
                     type: 'parking',
                     key: GOOGLE_MAPS_API_KEY
                 }
